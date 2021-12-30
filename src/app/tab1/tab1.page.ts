@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { PostsService } from '../services/posts.service';
+
+import { Observable, throwError } from 'rxjs';
+import { catchError, filter, map, retry, tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-tab1',
@@ -6,21 +10,19 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit {
-  previewImages = []
+  previewImages$: Observable<unknown[]>
 
-  constructor() {}
+  constructor(private postsService: PostsService) {}
   
   ngOnInit() {
-    fetch('https://www.reddit.com/r/pics/.json?&raw_json=1')
-      .then(res => res.json())
-      .then(res => {
-        console.log('res: ', res)
-        this.previewImages = res.data.children
-          .filter(entry => entry.data.preview)
-          .map(entry => entry.data.preview.images[0].source.url)
-          
-          console.log('this.previewImages: ', this.previewImages);
-      })
+    this.previewImages$ = this.postsService.getPosts('https://www.reddit.com/r/pics/.json?&raw_json=1')
+      .pipe(
+        map(res => {
+          return res['data'].children
+            .filter(entry => entry.data.preview)
+            .map(entry => entry.data.preview.images[0].source.url)
+        })
+      )
   }
 
 }
