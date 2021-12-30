@@ -1,0 +1,6 @@
+{
+	"appId": "io.ionic.starter",
+	"appName": "viewddit",
+	"webDir": "www",
+	"bundledWebRuntime": false
+}
