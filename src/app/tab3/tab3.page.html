@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-title>
-      Grid View
+      Memes View
     </ion-title>
   </ion-toolbar>
 </ion-header>
@@ -9,8 +9,9 @@
 <ion-content [fullscreen]="true">
   <ion-grid>
     <ion-row class="ion-align-items-center">
-      <ion-col size="6" *ngFor="let photoUrl of previewImages$ | async; index as position">
-        <ion-img [src]="photoUrl"></ion-img>
+      <ion-col size="6" *ngFor="let post of subredditPosts$ | async; index as position">
+        <ion-label style="font-size: smaller;">{{post.title}}</ion-label>
+        <ion-img [src]="post.preview.images[0].source.url"></ion-img>
       </ion-col>
     </ion-row>
   </ion-grid>
