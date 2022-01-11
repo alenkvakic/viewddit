@@ -11,6 +11,8 @@ import { PostsService } from '../services/posts.service';
 })
 export class Tab3Page implements OnInit {
   subredditPosts$: Observable<RedditPost[]>
+  selectedView = 'three-view'
+  showLabel = false;
 
   constructor(private postsService: PostsService) {}
   
@@ -23,6 +25,14 @@ export class Tab3Page implements OnInit {
             .map(entry => entry.data) // .preview.images[0].source.url // .title .author .created .is_video .over_18 .post_hint="image" .score 
         })
       )
+  }
+
+  switchDisplay() {
+    this.selectedView = this.selectedView === 'three-view' ? 'four-view' : 'three-view';
+  }
+
+  toggleLabel() {
+    this.showLabel = !this.showLabel;
   }
 
 }
