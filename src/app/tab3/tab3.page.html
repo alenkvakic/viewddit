@@ -4,13 +4,13 @@
       <ion-title>
         Memes View
       </ion-title>
-      <button (click)="switchDisplay()">Toggle View</button>
-      <button (click)="toggleLabel()">Toggle Labels</button>
+      <ion-menu-button color="medium" (click)="menuOpened()">⋮</ion-menu-button>
     </div>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
+
+<ion-content #content [fullscreen]="true" class="front">
   <div [ngClass]="[selectedView]">
     <div class="post" *ngFor="let post of subredditPosts$ | async; index as position">
       <ion-label *ngIf="showLabel" style="font-size: smaller;">{{post.title}}</ion-label>
@@ -19,3 +19,22 @@
   </div>
 
 </ion-content>
+
+<ion-menu (ionDidOpen)="menuOpened()" (ionDidClose)="menuClosed()" side="end" type="push" contentId="main" swipeGesture="false" class="my-custom-menu">
+  <ion-header>
+    <ion-toolbar color="danger">
+      <ion-title>Settings Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item (click)="switchDisplay()">Toggle View</ion-item>
+      <ion-item (click)="toggleLabel()">Toggle Labels</ion-item>
+      <ion-item>Menu Item 3</ion-item>
+      <ion-item>Menu Item 4</ion-item>
+      <ion-item>Menu Item 5</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+
+<ion-router-outlet id="main"></ion-router-outlet>

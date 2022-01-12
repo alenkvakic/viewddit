@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { RedditPost } from '../interfaces/reddit-post.interface';
@@ -14,6 +14,8 @@ export class Tab3Page implements OnInit {
   selectedView = 'three-view'
   showLabel = false;
 
+  @ViewChild('content') content: any;
+
   constructor(private postsService: PostsService) {}
   
   ngOnInit() {
@@ -22,7 +24,7 @@ export class Tab3Page implements OnInit {
         map(res => {
           return res['data'].children
             .filter(entry => entry.data.preview)
-            .map(entry => entry.data) // .preview.images[0].source.url // .title .author .created .is_video .over_18 .post_hint="image" .score 
+            .map(entry => entry.data)
         })
       )
   }
@@ -33,6 +35,16 @@ export class Tab3Page implements OnInit {
 
   toggleLabel() {
     this.showLabel = !this.showLabel;
+  }
+
+  menuOpened() {
+    this.content.el.classList.remove('front')
+    this.content.el.classList.add('back')
+  }
+
+  menuClosed() {
+    this.content.el.classList.remove('back')
+    this.content.el.classList.add('front')
   }
 
 }
