@@ -11,13 +11,111 @@
 
 
 <ion-content #content [fullscreen]="true" class="front">
-  <div [ngClass]="[selectedView]">
-    <div class="post" *ngFor="let post of subredditPosts$ | async; index as position">
-      <ion-label *ngIf="showLabel" style="font-size: smaller;">{{post.title}}</ion-label>
-      <ion-img [src]="post.preview.images[0].source.url"></ion-img>
-    </div>
+  <!-- single post view -->
+  <div *ngIf="selectedView === 'one'" style="display: flex">
+      <div style="width: 100%; padding: 1px">
+        <div *ngFor="let post of subredditPosts$ | async" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+        </div>
+      </div>
   </div>
 
+  <!-- two way view -->
+  <div *ngIf="selectedView === 'two'" style="display: flex">
+    <ng-container *ngIf="(subredditPosts$ | async) as posts">
+
+      <div style="width: 50%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="i % 2 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+      <div style="width: 50%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="!(i % 2 === 0)" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+
+  <!-- three way view -->
+  <div *ngIf="selectedView === 'three'" style="display: flex">
+    <ng-container *ngIf="(subredditPosts$ | async) as posts">
+
+      <div style="width: 33%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="i % 3 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+      <div style="width: 34%; padding: 1px 4px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="(i-1) % 3 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+      <div style="width: 33%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="(i-2) % 3 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
+
+  <!-- four way view -->
+  <div *ngIf="selectedView === 'four'" style="display: flex">
+    <ng-container *ngIf="(subredditPosts$ | async) as posts">
+
+      <div style="width: 25%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="i % 4 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+      <div style="width: 25%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="(i-1) % 4 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+      <div style="width: 25%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="(i-2) % 4 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+      <div style="width: 25%; padding: 1px">
+        <ng-container *ngFor="let post of posts; index as i">
+          <div *ngIf="(i-3) % 4 === 0" class="post">
+            <ion-label *ngIf="showLabel" class="label">{{post.title}}</ion-label>
+            <ion-img [src]="post.preview.images[0].source.url"></ion-img>
+          </div>
+        </ng-container>
+      </div>
+
+    </ng-container>
+  </div>
 </ion-content>
 
 <ion-menu (ionDidOpen)="menuOpened()" (ionDidClose)="menuClosed()" side="end" type="push" contentId="main" swipeGesture="false" class="my-custom-menu">
@@ -28,7 +126,7 @@
   </ion-header>
   <ion-content>
     <ion-list>
-      <ion-item (click)="switchDisplay()">Toggle View</ion-item>
+      <ion-item (click)="switchDisplay()">Switch View</ion-item>
       <ion-item (click)="toggleLabel()">Toggle Labels</ion-item>
       <ion-item>Menu Item 3</ion-item>
       <ion-item>Menu Item 4</ion-item>
