@@ -12,6 +12,7 @@ import { PostsService } from '../services/posts.service';
 export class Tab3Page implements OnInit {
   @ViewChild('content') content: any;
   subredditPosts$: Observable<RedditPost[]>;
+  loading$: Observable<boolean>;
   showLabel = false;
   views = ['one', 'two', 'three', 'four'];
   selectedView = 'three';
@@ -19,12 +20,8 @@ export class Tab3Page implements OnInit {
   constructor(private postsService: PostsService) {
   }
   ngOnInit() {
-    this.subredditPosts$ = this.postsService.getPosts('https://www.reddit.com/r/memes/.json?&raw_json=1')
-      .pipe(
-        map(res => res['data'].children
-            .filter(entry => entry.data.preview)
-            .map(entry => entry.data))
-      );
+    this.loading$ = this.postsService.isLoading$;
+    this.subredditPosts$ = this.postsService.getPostsData('https://www.reddit.com/r/memes/.json?&raw_json=1');
   }
 
   switchDisplay() {
@@ -36,6 +33,7 @@ export class Tab3Page implements OnInit {
       selectedIndex++;
     }
     this.selectedView = this.views[selectedIndex];
+    this.postsService.loadingOn();
   }
 
   toggleLabel() {

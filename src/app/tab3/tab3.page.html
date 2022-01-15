@@ -11,6 +11,7 @@
 
 
 <ion-content #content [fullscreen]="true" class="front">
+  <app-loading-spinner *ngIf="loading$ | async"></app-loading-spinner>
   <!-- single post view -->
   <div *ngIf="selectedView === 'one'" style="display: flex">
       <div style="width: 100%; padding: 1px">
