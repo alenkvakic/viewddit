@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {finalize, map, tap} from 'rxjs/operators';
-import {BehaviorSubject, Observable, Subject} from 'rxjs';
+import {finalize, map} from 'rxjs/operators';
+import {BehaviorSubject, Observable} from 'rxjs';
 import {RedditPost} from '../interfaces/reddit-post.interface';
 
 @Injectable({
@@ -20,7 +20,6 @@ export class PostsService {
   getPostsData(url: string): Observable<RedditPost[]>  {
     this.loadingOn();
     return this.http.get<RedditPost>(url).pipe(
-      // tap(() => this.loadingOn()),
       map(res => res.data.children
         .filter(entry => entry.data.preview)
         .map(entry => entry.data)),
@@ -29,12 +28,10 @@ export class PostsService {
   }
 
   loadingOn() {
-    console.log('loading true');
     this.#isLoadingSubject$.next(true);
   }
 
   loadingOff() {
-    console.log('loading false');
     this.#isLoadingSubject$.next(false);
   }
 }
