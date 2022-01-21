@@ -9,6 +9,15 @@ ion-img::part(image) {
   border-radius: 5px;
 }
 
+ion-input {
+  --background: hsl(0, 0%, 79%);
+  --color: black;
+  border-radius: 4px !important;
+  font-size: 0.8rem;
+  height: 30px;
+  border: 1px solid hsl(0, 0%, 79%) !important;
+}
+
 .post {
   margin-bottom: 5px;
   text-align: center;

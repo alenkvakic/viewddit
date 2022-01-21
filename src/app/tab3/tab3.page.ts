@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { map, switchMap } from 'rxjs/operators';
 import { RedditPost } from '../interfaces/reddit-post.interface';
 import { PostsService } from '../services/posts.service';
 
@@ -11,8 +11,12 @@ import { PostsService } from '../services/posts.service';
 })
 export class Tab3Page implements OnInit {
   @ViewChild('content') content: any;
+
+  selectedSub$ = new BehaviorSubject<string>('memes');
+
   subredditPosts$: Observable<RedditPost[]>;
   loading$: Observable<boolean>;
+  selectedSubreddit = 'memes';
   showLabel = false;
   views = ['one', 'two', 'three', 'four'];
   selectedView = 'three';
@@ -21,7 +25,10 @@ export class Tab3Page implements OnInit {
   }
   ngOnInit() {
     this.loading$ = this.postsService.isLoading$;
-    this.subredditPosts$ = this.postsService.getPostsData('https://www.reddit.com/r/memes/.json?&raw_json=1');
+    this.subredditPosts$ = this.selectedSub$.asObservable()
+      .pipe(
+        switchMap(enteredSubreddit => this.postsService.getPostsData(enteredSubreddit))
+      )
   }
 
   switchDisplay() {
@@ -38,6 +45,12 @@ export class Tab3Page implements OnInit {
 
   toggleLabel() {
     this.showLabel = !this.showLabel;
+  }
+
+  confirmSubreddit() {
+    console.log('this.selectedSubreddit: ', this.selectedSubreddit);
+    console.log('confirmed!');
+    this.selectedSub$.next(this.selectedSubreddit)
   }
 
   menuOpened() {

@@ -2,9 +2,12 @@
   <ion-toolbar>
     <div style="display: flex;">
       <ion-title>
-        Memes View
+        Hot 🔥
       </ion-title>
-      <ion-menu-button color="medium" (click)="menuOpened()">⋮</ion-menu-button>
+      <div style="display: flex; align-items: center;">
+        <ion-input clearInput placeholder="Enter Subreddit" [(ngModel)]="selectedSubreddit" (keyup.Enter)="confirmSubreddit()"></ion-input>
+        <ion-menu-button color="medium" (click)="menuOpened()">⋮</ion-menu-button>
+      </div>
     </div>
   </ion-toolbar>
 </ion-header>
