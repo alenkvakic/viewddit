@@ -2,7 +2,10 @@
 
 - a reddit gallery viewer for photos and videos
 - created with Ionic 6 and Angular 13
+- supports single, double, triple and 4-way view in a pinterest-like vertical view
 - tbc
+
+![alt text](https://i.ibb.co/5K2VN0s/viewddit-screenshot.png)
 
 ### How to run on web:
 - run in develope mode: `ionic serve`
