@@ -1,18 +1,8 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Grid View
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<app-vertical-view 
+  [title]="'Interesting 🧐'"
+  [selectedSubreddit]="'coolguides'"
+  [selectedView]="'one'"
+  [showLabel]="true"
+  ></app-vertical-view>
 
-<ion-content [fullscreen]="true">
-  <ion-grid>
-    <ion-row class="ion-align-items-center">
-      <ion-col size="6" *ngFor="let photoUrl of previewImages$ | async; index as position">
-        <ion-img [src]="photoUrl"></ion-img>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-
-</ion-content>
+<ion-router-outlet id="main"></ion-router-outlet>
